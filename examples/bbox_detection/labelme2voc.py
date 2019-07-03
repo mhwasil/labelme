@@ -95,12 +95,30 @@ def main():
             if shape['shape_type'] != 'rectangle':
                 print('Skipping shape: label={label}, shape_type={shape_type}'
                       .format(**shape))
-                continue
+                #continue
 
             class_name = shape['label']
             class_id = class_names.index(class_name)
 
-            (xmin, ymin), (xmax, ymax) = shape['points']
+            #(xmin, ymin), (xmax, ymax) = shape['points']
+            boundaries = shape['points']
+            xmin  = 100000
+            xmax = -100000
+            ymin  = 100000
+            ymax = -100000
+            print (boundaries)
+            for bdr in boundaries:
+                if xmin > bdr[0]:
+                    xmin = bdr[0]
+                if ymin > bdr[1]:
+                    ymin = bdr[1]
+                if xmax < bdr[0]:
+                    xmax = bdr[0]
+                if ymax < bdr[1]:
+                    ymax = bdr[1]
+            
+            print (xmin, xmax, ymin, ymax)
+
             bboxes.append([xmin, ymin, xmax, ymax])
             labels.append(class_id)
 
